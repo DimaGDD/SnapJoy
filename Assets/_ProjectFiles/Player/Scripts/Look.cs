@@ -11,10 +11,9 @@ public class Look : MonoBehaviour
     private float _xRotation = 0f;
     private Vector2 _lookInput;
 
-    public Vector2 LookInput
+    private void OnEnable()
     {
-        get { return _lookInput; }
-        set { _lookInput = value; }
+        InputHandler.OnLookInput += OnLookAction;
     }
 
     private void Awake()
@@ -42,5 +41,15 @@ public class Look : MonoBehaviour
         _xRotation = Mathf.Clamp(_xRotation, -_maxLookAngle, _maxLookAngle);
 
         _cameraTransform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+    }
+
+    private void OnLookAction(Vector2 lookInput)
+    {
+        _lookInput = lookInput;
+    }
+
+    private void OnDisable()
+    {
+        InputHandler.OnLookInput -= OnLookAction;
     }
 }

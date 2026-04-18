@@ -13,11 +13,19 @@ public class InputHandler : MonoBehaviour
     private InputActionReference _interact;
     private InputActionReference _rotateItem;
 
-    private Look _lookScript;
-    private Movement _movementScript;
-    private Interact _interactScript;
     private States _playerStates;
 
+    // Look
+    public static event Action<Vector2> OnLookInput;
+
+    // Movement
+    public static event Action<Vector2> OnMoveInput;
+
+    // Interact
+    public static event Action OnInteractPressed;
+    public static event Action OnDoubleInteractPressed;
+
+    // Rotate Item
     public static event Action<Vector2> OnItemRotateInput;
     public static event Action OnItemRotateCanceled;
 
@@ -28,9 +36,6 @@ public class InputHandler : MonoBehaviour
         _interact = _inputBinds.Interact;
         _rotateItem = _inputBinds.RotateItem;
 
-        _lookScript = GetComponent<Look>();
-        _movementScript = GetComponent<Movement>();
-        _interactScript = GetComponent<Interact>();
         _playerStates = GetComponent<States>();
     }
 
@@ -38,17 +43,17 @@ public class InputHandler : MonoBehaviour
     {
         // Look
         _lookAction.action.Enable();
-        _lookAction.action.performed += OnLookTrigger;
-        _lookAction.action.canceled += OnLookTrigger;
+        _lookAction.action.performed += OnLookAction;
+        _lookAction.action.canceled += OnLookAction;
 
         // Movement
         _moveAction.action.Enable();
-        _moveAction.action.performed += OnMoveTrigger;
-        _moveAction.action.canceled += OnMoveTrigger;
+        _moveAction.action.performed += OnMoveAction;
+        _moveAction.action.canceled += OnMoveAction;
 
         // Interact
         _interact.action.Enable();
-        _interact.action.performed += OnInteractPerformed;
+        _interact.action.performed += OnInteractAction;
 
         // Rotate Item
         _rotateItem.action.Enable();
@@ -56,43 +61,41 @@ public class InputHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        // Look
-        _lookAction.action.performed -= OnLookTrigger;
-        _lookAction.action.canceled -= OnLookTrigger;
         _lookAction.action.Disable();
-
-        // Movement
-        _moveAction.action.performed -= OnMoveTrigger;
-        _moveAction.action.canceled -= OnMoveTrigger;
         _moveAction.action.Disable();
-
-        // Interact
-        _interact.action.performed -= OnInteractPerformed;
         _interact.action.Disable();
-
-        // Rotate Item
         _rotateItem.action.Disable();
     }
 
-    // Look
-    private void OnLookTrigger(InputAction.CallbackContext context)
+    // Movement
+    private void OnLookAction(InputAction.CallbackContext context)
     {
         if (!_playerStates.IsViewItem)
-            _lookScript.LookInput = context.ReadValue<Vector2>();
+        {
+            OnLookInput?.Invoke(context.ReadValue<Vector2>());
+        }
     }
 
     // Movement
-    private void OnMoveTrigger(InputAction.CallbackContext context)
+    private void OnMoveAction(InputAction.CallbackContext context)
     {
         if (!_playerStates.IsViewItem)
-            _movementScript.MoveInput = context.ReadValue<Vector2>();
+        {
+            OnMoveInput?.Invoke(context.ReadValue<Vector2>());
+        }
     }
 
     // Interact
-    private void OnInteractPerformed(InputAction.CallbackContext context)
+    private void OnInteractAction(InputAction.CallbackContext context)
     {
         if (!_playerStates.IsViewItem)
-            _interactScript.TryInteract();
+        {
+            OnInteractPressed?.Invoke();
+        }
+        else
+        {
+            OnDoubleInteractPressed?.Invoke();
+        }
     }
 
     private void Update()

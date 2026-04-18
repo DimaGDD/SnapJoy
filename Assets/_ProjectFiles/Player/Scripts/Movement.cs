@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -11,10 +12,9 @@ public class Movement : MonoBehaviour
     private Vector2 _moveInput;
     private Vector3 _velocity;
 
-    public Vector2 MoveInput
+    private void OnEnable()
     {
-        get { return _moveInput; }
-        set { _moveInput = value; }
+        InputHandler.OnMoveInput += OnMoveAction;
     }
 
     private void Awake()
@@ -31,5 +31,15 @@ public class Movement : MonoBehaviour
 
         _velocity.y += _gravity * Time.deltaTime;
         _controller.Move(_velocity * Time.deltaTime);
+    }
+
+    private void OnMoveAction(Vector2 moveInput)
+    {
+        _moveInput = moveInput;
+    }
+
+    private void OnDisable()
+    {
+        InputHandler.OnMoveInput -= OnMoveAction;
     }
 }

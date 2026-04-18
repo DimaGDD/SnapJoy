@@ -7,13 +7,19 @@ public class Interact : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private Transform _itemViewPosition;
-    [SerializeField] private Transform _itemPosition;
+    [SerializeField] private Transform _itemHandPosition;
 
     private Camera _mainCamera;
     private float _interactRange;
     private LayerMask _interactLayerMask;
 
     private States _playerStates;
+
+    private void OnEnable()
+    {
+        InputHandler.OnInteractPressed += OnInteract;
+        InputHandler.OnDoubleInteractPressed += OnDoubleInteract;
+    }
 
     private void Awake()
     {
@@ -24,7 +30,7 @@ public class Interact : MonoBehaviour
         _playerStates = GetComponent<States>();
     }
 
-    public void TryInteract()
+    private void OnInteract()
     {
         Ray ray = _mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
@@ -34,15 +40,31 @@ public class Interact : MonoBehaviour
 
             if (defaultItem != null)
             {
-                if (!_playerStates.IsViewItem && defaultItem.InteractType == ItemInteractType.Pickup)
+                if (!_playerStates.IsViewItem && defaultItem.InteractType == ItemInteractType.Pickup && _playerStates.CurrentItem == null)
                 {
-                    defaultItem.View(_itemViewPosition);
+                    defaultItem.MoveToTarget(_itemViewPosition, true);
                     _playerStates.IsViewItem = true;
+                    _playerStates.CurrentItem = defaultItem;
 
                     UIManager.Instance.ShowViewPanel(defaultItem.Description);
                     UIManager.Instance.ShowCursor();
                 }
             }
         }
+    }
+
+    private void OnDoubleInteract()
+    {
+        _playerStates.CurrentItem.MoveToTarget(_itemHandPosition, false);
+        _playerStates.IsViewItem = false;
+
+        UIManager.Instance.HideViewPanel();
+        UIManager.Instance.HideCursor();
+    }
+
+    private void OnDisable ()
+    {
+        InputHandler.OnInteractPressed -= OnInteract;
+        InputHandler.OnDoubleInteractPressed -= OnDoubleInteract;
     }
 }

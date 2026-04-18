@@ -1,6 +1,7 @@
 using UnityEngine;
 using static UnityEditor.VersionControl.Asset;
 using System.Collections;
+using Mono.Cecil.Cil;
 
 public enum ItemInteractType
 {
@@ -22,7 +23,7 @@ public class DefaultItem : MonoBehaviour
 
     private Quaternion _defaultRotation;
     private Coroutine _coroutine;
-    private bool _isPickUpMoving = false;
+    private bool _isMoving = false;
 
     public ItemInteractType InteractType
     {
@@ -34,22 +35,16 @@ public class DefaultItem : MonoBehaviour
         get { return _description; }
     }
 
-    private void OnEnable()
-    {
-        InputHandler.OnItemRotateInput += HandleRotationInput;
-        InputHandler.OnItemRotateCanceled += HandleRotationReset;
-    }
-
-    public void View(Transform itemViewPosition)
+    public void MoveToTarget(Transform itemViewPosition, bool isSubActions)
     {
         transform.SetParent(itemViewPosition);
 
-        StartCoroutine(SmoothMove(itemViewPosition));
+        StartCoroutine(SmoothMove(itemViewPosition, isSubActions));
     }
 
-    private IEnumerator SmoothMove(Transform itemPosition)
+    private IEnumerator SmoothMove(Transform itemPosition, bool isSubActions)
     {
-        _isPickUpMoving = true; 
+        _isMoving = true; 
 
         while (Vector3.Distance(transform.position, itemPosition.position) > 0.01f)
         {
@@ -64,12 +59,18 @@ public class DefaultItem : MonoBehaviour
 
         _defaultRotation = transform.rotation;
 
-        _isPickUpMoving = false;
+        _isMoving = false;
+
+        if (isSubActions)
+        {
+            InputHandler.OnItemRotateInput += HandleRotationInput;
+            InputHandler.OnItemRotateCanceled += HandleRotationReset;
+        }
     }
 
     private void HandleRotationInput(Vector2 input)
     {
-        if (_isPickUpMoving) return;
+        if (_isMoving) return;
 
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -80,7 +81,7 @@ public class DefaultItem : MonoBehaviour
 
     private void HandleRotationReset()
     {
-        if (_isPickUpMoving) return;
+        if (_isMoving) return;
 
         _coroutine = StartCoroutine(SmoothReset());
     }
