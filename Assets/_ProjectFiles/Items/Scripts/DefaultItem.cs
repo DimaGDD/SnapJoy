@@ -15,6 +15,7 @@ public enum ItemInteractType
 public class DefaultItem : MonoBehaviour
 {
     [Header("Default Settings")]
+    [SerializeField] private InteractTextConfig _interactTextConfig;
     [SerializeField] private ItemInteractType _interactType;
     [SerializeField] private string _description;
     [SerializeField] private float _moveSpeed = 5f;
@@ -35,11 +36,19 @@ public class DefaultItem : MonoBehaviour
         get { return _description; }
     }
 
-    public void MoveToTarget(Transform itemViewPosition, bool isSubActions)
+    public string InteractText
     {
-        transform.SetParent(itemViewPosition);
+        get { return _interactTextConfig.GetText(_interactType); }
+    }
 
-        StartCoroutine(SmoothMove(itemViewPosition, isSubActions));
+    public void MoveToTarget(Transform targetPosition, bool isSubActions)
+    {
+        transform.SetParent(targetPosition);
+
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(SmoothMove(targetPosition, isSubActions));
     }
 
     private IEnumerator SmoothMove(Transform itemPosition, bool isSubActions)

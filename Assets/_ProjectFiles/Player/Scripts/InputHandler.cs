@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.VersionControl.Asset;
 
 public class InputHandler : MonoBehaviour
 {
@@ -14,6 +13,7 @@ public class InputHandler : MonoBehaviour
     private InputActionReference _rotateItem;
 
     private States _playerStates;
+    private RaycastFromMouse _raycastFromMouse;
 
     // Look
     public static event Action<Vector2> OnLookInput;
@@ -29,6 +29,8 @@ public class InputHandler : MonoBehaviour
     public static event Action<Vector2> OnItemRotateInput;
     public static event Action OnItemRotateCanceled;
 
+    private bool _isHittingCurrentItem = false;
+
     private void Awake()
     {
         _lookAction = _inputBinds.LookAction;
@@ -37,6 +39,7 @@ public class InputHandler : MonoBehaviour
         _rotateItem = _inputBinds.RotateItem;
 
         _playerStates = GetComponent<States>();
+        _raycastFromMouse = GetComponent<RaycastFromMouse>();
     }
 
     private void OnEnable()
@@ -57,6 +60,18 @@ public class InputHandler : MonoBehaviour
 
         // Rotate Item
         _rotateItem.action.Enable();
+
+        _rotateItem.action.started += ctx =>
+        {
+            if (_playerStates.IsViewItem)
+                _isHittingCurrentItem = _raycastFromMouse.CastRayFromCursor(_playerStates);
+        };
+
+        _rotateItem.action.canceled += ctx =>
+        {
+            if (_playerStates.IsViewItem)
+                _isHittingCurrentItem = false;
+        };
     }
 
     private void OnDisable()
@@ -74,6 +89,10 @@ public class InputHandler : MonoBehaviour
         {
             OnLookInput?.Invoke(context.ReadValue<Vector2>());
         }
+        else
+        {
+            OnLookInput?.Invoke(Vector2.zero);
+        }
     }
 
     // Movement
@@ -82,6 +101,10 @@ public class InputHandler : MonoBehaviour
         if (!_playerStates.IsViewItem)
         {
             OnMoveInput?.Invoke(context.ReadValue<Vector2>());
+        }
+        else
+        {
+            OnMoveInput?.Invoke(Vector2.zero);
         }
     }
 
@@ -104,11 +127,14 @@ public class InputHandler : MonoBehaviour
         {
             if (_rotateItem.action.IsPressed())
             {
-                Vector2 lookDelta = _lookAction.action.ReadValue<Vector2>();
-
-                if (lookDelta.sqrMagnitude > 0.001f)
+                if (_isHittingCurrentItem)
                 {
-                    OnItemRotateInput?.Invoke(lookDelta);
+                    Vector2 lookDelta = _lookAction.action.ReadValue<Vector2>();
+
+                    if (lookDelta.sqrMagnitude > 0.001f)
+                    {
+                        OnItemRotateInput?.Invoke(lookDelta);
+                    }
                 }
             }
             else

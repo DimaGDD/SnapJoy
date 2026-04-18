@@ -9,6 +9,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _viewPanel;
     [SerializeField] private TextMeshProUGUI _itemDescription;
 
+    [Header("Interact Panel")]
+    [SerializeField] private GameObject _interactPanel;
+    [SerializeField] private TextMeshProUGUI _interactAction;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -44,5 +48,19 @@ public class UIManager : MonoBehaviour
     {
         _viewPanel.SetActive(false);
         _itemDescription.text = null;
+    }
+
+    public void ShowInteractPanel(string keyName, string action)
+    {
+        string toolTip = keyName + " - [ " + action + " ]";
+
+        _interactAction.text = toolTip;
+        _interactPanel.SetActive(true);
+    }
+
+    public void HideInteractPanel()
+    {
+        _interactPanel.SetActive(false);
+        _interactAction.text = null;
     }
 }
