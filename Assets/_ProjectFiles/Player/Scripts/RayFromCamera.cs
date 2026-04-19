@@ -34,8 +34,9 @@ public class RayFromCamera : MonoBehaviour
             return;
         }
 
-        DefaultItem defaultObject = hit.collider.GetComponent<DefaultItem>();
-        DefaultItemHolder defaultItemHolder = hit.collider.GetComponent<DefaultItemHolder>();
+        DefaultPickupItem defaultObject = hit.collider.GetComponent<DefaultPickupItem>();
+        DefaultHolderItem defaultItemHolder = hit.collider.GetComponent<DefaultHolderItem>();
+        DefaultOpenItem defaultOpenItem = hit.collider.GetComponent<DefaultOpenItem>();
 
         string keyName = _inputBinds.Interact.action.GetBindingDisplayString();
 
@@ -46,6 +47,11 @@ public class RayFromCamera : MonoBehaviour
         {
             shouldShowPanel = true;
             textToShow = defaultItemHolder.InteractText;
+        }
+        else if (defaultOpenItem != null && !defaultOpenItem.IsUnlock)
+        {
+            shouldShowPanel = true;
+            textToShow = defaultOpenItem.InteractText;
         }
         else if (defaultObject != null && defaultObject != _playerStates.CurrentItem)
         {

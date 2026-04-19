@@ -3,7 +3,7 @@ using UnityEngine;
 public class States : MonoBehaviour
 {
     private bool _isViewItem = false;
-    private DefaultItem _currentItem;
+    private DefaultPickupItem _currentItem;
 
     public bool IsViewItem
     {
@@ -11,7 +11,7 @@ public class States : MonoBehaviour
         set { _isViewItem = value; }
     }
 
-    public DefaultItem CurrentItem
+    public DefaultPickupItem CurrentItem
     {
         get { return _currentItem; }
         set { _currentItem = value; }

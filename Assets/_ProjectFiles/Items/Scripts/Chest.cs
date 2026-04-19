@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public class Chest : DefaultItemHolder
+public class Chest : DefaultOpenItem
 {
 }

@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public class Key : DefaultItem
+public class Key : DefaultPickupItem
 {
 }

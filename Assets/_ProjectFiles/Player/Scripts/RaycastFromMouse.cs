@@ -23,7 +23,7 @@ public class RaycastFromMouse : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, _maxDistance))
         {
-            DefaultItem item = hit.collider.GetComponent<DefaultItem>();
+            DefaultPickupItem item = hit.collider.GetComponent<DefaultPickupItem>();
 
             if (item == playerStates.CurrentItem)
             {
