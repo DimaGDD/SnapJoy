@@ -9,6 +9,7 @@ public class SO_InputBinds : ScriptableObject
     [SerializeField] private InputActionReference _moveAction;
     [SerializeField] private InputActionReference _interact;
     [SerializeField] private InputActionReference _rotateItem;
+    [SerializeField] private InputActionReference _skipDialogue;
 
     public InputActionReference LookAction
     {
@@ -28,5 +29,10 @@ public class SO_InputBinds : ScriptableObject
     public InputActionReference RotateItem
     {
         get { return _rotateItem; }
+    }
+
+    public InputActionReference SkipDialogue
+    {
+        get { return _skipDialogue; }
     }
 }

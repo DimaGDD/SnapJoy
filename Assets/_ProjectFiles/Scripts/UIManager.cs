@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using System.Reflection.Emit;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,6 +17,11 @@ public class UIManager : MonoBehaviour
 
     [Header("Interface")]
     [SerializeField] private CanvasGroup _dot;
+
+    [Header("Quest Popup")]
+    [SerializeField] private CanvasGroup _questPopupPanel;
+    [SerializeField] private Text _questNameLabel;
+    [SerializeField] private Toggle _questToggle;
 
     private void Awake()
     {
@@ -56,7 +63,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowInteractPanel(string keyName, string action)
     {
-        string toolTip = keyName + " - [ " + action + " ]";
+        string toolTip = $"{keyName} - [ {action} ]";
 
         _interactAction.text = toolTip;
         _interactPanel.alpha = 1;
@@ -76,5 +83,12 @@ public class UIManager : MonoBehaviour
     public void HideDot()
     {
         _dot.alpha = 0;
+    }
+
+    public void ShowQuestPopup(string questName, bool isComplete)
+    {
+        _questPopupPanel.alpha = 1;
+        _questNameLabel.text = questName;
+        _questToggle.isOn = isComplete;
     }
 }

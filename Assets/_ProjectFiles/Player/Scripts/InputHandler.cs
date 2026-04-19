@@ -11,6 +11,7 @@ public class InputHandler : MonoBehaviour
     private InputActionReference _moveAction;
     private InputActionReference _interact;
     private InputActionReference _rotateItem;
+    private InputActionReference _skipDialogue;
 
     private States _playerStates;
     private RaycastFromMouse _raycastFromMouse;
@@ -30,6 +31,9 @@ public class InputHandler : MonoBehaviour
     public static event Action<Vector2> OnItemRotateInput;
     public static event Action OnItemRotateCanceled;
 
+    // Skip Dialogue
+    public static event Action OnSkipDialogue;
+
     private bool _isHittingCurrentItem = false;
 
     // Interact Parametrs
@@ -42,6 +46,7 @@ public class InputHandler : MonoBehaviour
         _moveAction = _inputBinds.MoveAction;
         _interact = _inputBinds.Interact;
         _rotateItem = _inputBinds.RotateItem;
+        _skipDialogue = _inputBinds.SkipDialogue;
 
         _playerStates = GetComponent<States>();
         _raycastFromMouse = GetComponent<RaycastFromMouse>();
@@ -79,6 +84,8 @@ public class InputHandler : MonoBehaviour
             if (_playerStates.IsViewItem)
                 _isHittingCurrentItem = false;
         };
+
+        _skipDialogue.action.performed += OnSkipDialoguePerformed;
     }
 
     private void OnDisable()
@@ -92,7 +99,7 @@ public class InputHandler : MonoBehaviour
     // Movement
     private void OnLookAction(InputAction.CallbackContext context)
     {
-        if (!_playerStates.IsViewItem)
+        if (!_playerStates.IsViewItem && !_playerStates.IsInDialogue)
         {
             OnLookInput?.Invoke(context.ReadValue<Vector2>());
         }
@@ -105,7 +112,7 @@ public class InputHandler : MonoBehaviour
     // Movement
     private void OnMoveAction(InputAction.CallbackContext context)
     {
-        if (!_playerStates.IsViewItem)
+        if (!_playerStates.IsViewItem && !_playerStates.IsInDialogue)
         {
             OnMoveInput?.Invoke(context.ReadValue<Vector2>());
         }
@@ -114,19 +121,6 @@ public class InputHandler : MonoBehaviour
             OnMoveInput?.Invoke(Vector2.zero);
         }
     }
-
-    // Interact
-    //private void OnInteractAction(InputAction.CallbackContext context)
-    //{
-    //    if (!_playerStates.IsViewItem)
-    //    {
-    //        OnInteractPressed?.Invoke();
-    //    }
-    //    else
-    //    {
-    //        OnDoubleInteractPressed?.Invoke();
-    //    }
-    //}
 
     private void OnInteractStart(InputAction.CallbackContext context)
     {
@@ -178,5 +172,11 @@ public class InputHandler : MonoBehaviour
                 OnItemRotateCanceled?.Invoke();
             }
         }
+    }
+
+    private void OnSkipDialoguePerformed(InputAction.CallbackContext context)
+    {
+        if (_playerStates.IsInDialogue)
+            OnSkipDialogue?.Invoke();
     }
 }

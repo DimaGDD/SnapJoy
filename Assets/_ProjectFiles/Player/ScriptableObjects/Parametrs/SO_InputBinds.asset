@@ -16,3 +16,4 @@ MonoBehaviour:
   _moveAction: {fileID: 7150930297312464931, guid: 6db9d6a78cb4f1248a88ecf9b43592c0, type: 3}
   _interact: {fileID: -2475167091290718988, guid: 6db9d6a78cb4f1248a88ecf9b43592c0, type: 3}
   _rotateItem: {fileID: -8788835177747569739, guid: 6db9d6a78cb4f1248a88ecf9b43592c0, type: 3}
+  _skipDialogue: {fileID: 5414129189384292447, guid: 6db9d6a78cb4f1248a88ecf9b43592c0, type: 3}

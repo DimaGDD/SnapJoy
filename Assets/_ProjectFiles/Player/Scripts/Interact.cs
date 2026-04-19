@@ -5,6 +5,7 @@ public class Interact : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] SO_Interact _interactParametrs;
+    [SerializeField] SO_InputBinds _inputBinds;
 
     [Header("Other")]
     [SerializeField] private Transform _itemViewPosition;
@@ -45,6 +46,7 @@ public class Interact : MonoBehaviour
         DefaultPickupItem hitItem = hit.collider.GetComponent<DefaultPickupItem>();
         DefaultHolderItem hitHolder = hit.collider.GetComponent<DefaultHolderItem>();
         DefaultOpenItem hitOpen = hit.collider.GetComponent<DefaultOpenItem>();
+        DefaultNPC hitNPC = hit.collider.GetComponent<DefaultNPC>();
 
         if (hitHolder != null && !hitHolder.HasItem && _playerStates.CurrentItem != null)
         {
@@ -58,11 +60,21 @@ public class Interact : MonoBehaviour
             return;
         }
 
+        if (hitNPC != null)
+        {
+            InteractWithNPC(hitNPC);
+        }
+
         if (hitItem != null && _playerStates.CurrentItem == null)
         {
             PickupItem(hitItem);
             return;
         }
+    }
+
+    private void InteractWithNPC(DefaultNPC hitNPC)
+    {
+        hitNPC.InteractWithPlayer(_playerStates, _inputBinds.SkipDialogue);
     }
 
     private void OnHoldInteractAction(float time)

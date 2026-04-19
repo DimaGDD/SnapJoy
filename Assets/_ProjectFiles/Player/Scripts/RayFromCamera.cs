@@ -20,7 +20,7 @@ public class RayFromCamera : MonoBehaviour
 
     private void Update()
     {
-        if (_playerStates.IsViewItem)
+        if (_playerStates.IsViewItem && _playerStates.IsInDialogue)
         {
             UIManager.Instance.HideInteractPanel();
             return;
@@ -38,6 +38,7 @@ public class RayFromCamera : MonoBehaviour
         DefaultHolderItem defaultItemHolder = hit.collider.GetComponent<DefaultHolderItem>();
         DefaultOpenItem defaultOpenItem = hit.collider.GetComponent<DefaultOpenItem>();
         DefaultHoldItem defaultHoldItem = hit.collider.GetComponent<DefaultHoldItem>();
+        DefaultNPC defaultNPC = hit.collider.GetComponent<DefaultNPC>();
 
         string keyName = _inputBinds.Interact.action.GetBindingDisplayString();
 
@@ -58,6 +59,11 @@ public class RayFromCamera : MonoBehaviour
         {
             shouldShowPanel = true;
             textToShow = defaultHoldItem.InteractText;
+        }
+        else if (defaultNPC != null)
+        {
+            shouldShowPanel = true;
+            textToShow = defaultNPC.InteractText;
         }
         else if (defaultObject != null && defaultObject != _playerStates.CurrentItem)
         {
