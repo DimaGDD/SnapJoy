@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI _toolTipText;
 
     private bool _waitForClick = false;
+    private DefaultPickupItem _questItem;
 
     private States _playerStates;
 
@@ -39,7 +40,7 @@ public class DialogueManager : MonoBehaviour
         _toolTipText = _toolTip.GetComponent<TextMeshProUGUI>();
     }
 
-    public void StartDialogue(DialogueGraph graph, States playerStates, InputActionReference skipButton, DefaultNPC npc)
+    public void StartDialogue(DialogueGraph graph, States playerStates, InputActionReference skipButton, DefaultNPC npc, DefaultPickupItem questItem)
     {
         InputHandler.OnSkipDialogue += SkipDialogue;
 
@@ -47,6 +48,7 @@ public class DialogueManager : MonoBehaviour
         _npc = npc;
         _currentGraph = graph;
         _skipButton = skipButton;
+        _questItem = questItem;
 
         OpenPanel();
         ShowNode("0");
@@ -154,7 +156,7 @@ public class DialogueManager : MonoBehaviour
     private void TriggerQuest(string questName)
     {
         _npc.IsQuestTaken = true;
-        UIManager.Instance.ShowQuestPopup(questName, false);
+        UIManager.Instance.ShowQuestPopup(questName, _questItem.name, false);
     }
 
     private void EndDialogue()

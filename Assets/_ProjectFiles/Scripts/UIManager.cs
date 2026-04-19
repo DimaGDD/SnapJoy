@@ -85,10 +85,15 @@ public class UIManager : MonoBehaviour
         _dot.alpha = 0;
     }
 
-    public void ShowQuestPopup(string questName, bool isComplete)
+    public void ShowQuestPopup(string questName, string questItem, bool isComplete)
     {
         _questPopupPanel.alpha = 1;
-        _questNameLabel.text = questName;
+        _questNameLabel.text = $"{questName} {questItem}";
+        _questToggle.isOn = isComplete;
+    }
+
+    public void UpdateQuestPopup(bool isComplete)
+    {
         _questToggle.isOn = isComplete;
     }
 }

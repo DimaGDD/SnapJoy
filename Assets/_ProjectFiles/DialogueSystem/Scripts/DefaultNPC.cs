@@ -8,17 +8,23 @@ public class DefaultNPC : MonoBehaviour
     [SerializeField] private string _name = "NPC";
     [SerializeField] private InteractTextConfig _interactTextConfig;
     [SerializeField] private DialogueGraph _dialogueGraph;
-    [SerializeField] private List<GameObject> _questItems = new List<GameObject>();
+    [SerializeField] private List<DefaultPickupItem> _questItems = new List<DefaultPickupItem>();
 
-    private GameObject _selectedQuestItem;
+    private DefaultPickupItem _selectedQuestItem;
 
     private bool _isQuestTaken = false;
+    private bool _isQuestCompleted = false;
 
     public bool IsQuestTaken
     {
         get { return _isQuestTaken; }
         set { _isQuestTaken = value; }
-    }    
+    }
+
+    public bool IsQuestCompleted
+    {
+        get { return  _isQuestCompleted; }
+    }
 
     public string Name
     {
@@ -37,16 +43,22 @@ public class DefaultNPC : MonoBehaviour
 
     private void Awake()
     {
-        //ChooseQuestItem();
+        ChooseQuestItem();
     }
 
-    public void InteractWithPlayer(States playerStates, InputActionReference skipButton)
+    public void InteractWithPlayer(States playerStates, InputActionReference skipButton, DefaultPickupItem itemInHand)
     {
         if (!_isQuestTaken)
-            DialogueManager.Instance.StartDialogue(_dialogueGraph, playerStates, skipButton, this);
+            DialogueManager.Instance.StartDialogue(_dialogueGraph, playerStates, skipButton, this, _selectedQuestItem);
         else
         {
-
+            if (itemInHand != null && itemInHand == _selectedQuestItem)
+            {
+                UIManager.Instance.UpdateQuestPopup(true);
+                playerStates.CurrentItem = null;
+                Destroy(itemInHand.gameObject);
+                _isQuestCompleted = true;
+            }
         }
     }
 

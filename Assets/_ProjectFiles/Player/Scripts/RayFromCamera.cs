@@ -60,7 +60,7 @@ public class RayFromCamera : MonoBehaviour
             shouldShowPanel = true;
             textToShow = defaultHoldItem.InteractText;
         }
-        else if (defaultNPC != null)
+        else if (defaultNPC != null && !defaultNPC.IsQuestCompleted)
         {
             shouldShowPanel = true;
             textToShow = defaultNPC.InteractText;

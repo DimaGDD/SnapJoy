@@ -74,7 +74,7 @@ public class Interact : MonoBehaviour
 
     private void InteractWithNPC(DefaultNPC hitNPC)
     {
-        hitNPC.InteractWithPlayer(_playerStates, _inputBinds.SkipDialogue);
+        hitNPC.InteractWithPlayer(_playerStates, _inputBinds.SkipDialogue, _playerStates.CurrentItem);
     }
 
     private void OnHoldInteractAction(float time)
