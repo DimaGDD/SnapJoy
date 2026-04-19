@@ -6,12 +6,15 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [Header("View Panel")]
-    [SerializeField] private GameObject _viewPanel;
+    [SerializeField] private CanvasGroup _viewPanel;
     [SerializeField] private TextMeshProUGUI _itemDescription;
 
     [Header("Interact Panel")]
-    [SerializeField] private GameObject _interactPanel;
+    [SerializeField] private CanvasGroup _interactPanel;
     [SerializeField] private TextMeshProUGUI _interactAction;
+
+    [Header("Interface")]
+    [SerializeField] private CanvasGroup _dot;
 
     private void Awake()
     {
@@ -21,7 +24,8 @@ public class UIManager : MonoBehaviour
 
     public void ToggleInventory(bool state)
     {
-        _viewPanel.SetActive(state);
+        _viewPanel.alpha = state ? 1 : 0;
+
         Cursor.visible = state;
         Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
     }
@@ -41,12 +45,12 @@ public class UIManager : MonoBehaviour
     public void ShowViewPanel(string description)
     {
         _itemDescription.text = description;
-        _viewPanel.SetActive(true);
+        _viewPanel.alpha = 1;
     }
 
     public void HideViewPanel()
     {
-        _viewPanel.SetActive(false);
+        _viewPanel.alpha = 0;
         _itemDescription.text = null;
     }
 
@@ -55,12 +59,22 @@ public class UIManager : MonoBehaviour
         string toolTip = keyName + " - [ " + action + " ]";
 
         _interactAction.text = toolTip;
-        _interactPanel.SetActive(true);
+        _interactPanel.alpha = 1;
     }
 
     public void HideInteractPanel()
     {
-        _interactPanel.SetActive(false);
+        _interactPanel.alpha = 0;
         _interactAction.text = null;
+    }
+
+    public void ShowDot()
+    {
+        _dot.alpha = 1;
+    }
+
+    public void HideDot()
+    {
+        _dot.alpha = 0;
     }
 }

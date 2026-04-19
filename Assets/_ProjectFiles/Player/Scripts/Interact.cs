@@ -116,6 +116,8 @@ public class Interact : MonoBehaviour
 
         UIManager.Instance.ShowViewPanel(item.Description);
         UIManager.Instance.ShowCursor();
+
+        UIManager.Instance.HideDot();
     }
 
     private void PutItemInHolder(DefaultHolderItem holder)
@@ -140,6 +142,8 @@ public class Interact : MonoBehaviour
 
         UIManager.Instance.HideViewPanel();
         UIManager.Instance.HideCursor();
+
+        UIManager.Instance.ShowDot();
     }
 
     private void OnDisable()

@@ -190,10 +190,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21734ba1c48998469e7181a422bf774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  _viewPanel: {fileID: 1305056209}
+  _viewPanel: {fileID: 1305056213}
   _itemDescription: {fileID: 219106905}
-  _interactPanel: {fileID: 458711673}
+  _interactPanel: {fileID: 458711677}
   _interactAction: {fileID: 307647655}
+  _dot: {fileID: 588477250}
 --- !u!4 &34166534
 Transform:
   m_ObjectHideFlags: 0
@@ -766,13 +767,14 @@ GameObject:
   - component: {fileID: 458711674}
   - component: {fileID: 458711676}
   - component: {fileID: 458711675}
+  - component: {fileID: 458711677}
   m_Layer: 5
   m_Name: Interact Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &458711674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -831,6 +833,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458711673}
   m_CullTransparentMesh: 1
+--- !u!225 &458711677
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458711673}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!4 &479727085 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8945123439587829718, guid: a2e23e7aff01ee945b5dc1e2fc29228d, type: 3}
@@ -847,6 +861,7 @@ GameObject:
   - component: {fileID: 588477247}
   - component: {fileID: 588477249}
   - component: {fileID: 588477248}
+  - component: {fileID: 588477250}
   m_Layer: 5
   m_Name: Dot
   m_TagString: Untagged
@@ -911,6 +926,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588477246}
   m_CullTransparentMesh: 1
+--- !u!225 &588477250
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588477246}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &755395136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1266,13 +1293,14 @@ GameObject:
   - component: {fileID: 1305056210}
   - component: {fileID: 1305056212}
   - component: {fileID: 1305056211}
+  - component: {fileID: 1305056213}
   m_Layer: 5
-  m_Name: View Background
+  m_Name: View Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1305056210
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1331,6 +1359,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305056209}
   m_CullTransparentMesh: 1
+--- !u!225 &1305056213
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305056209}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1335024233
 GameObject:
   m_ObjectHideFlags: 0
