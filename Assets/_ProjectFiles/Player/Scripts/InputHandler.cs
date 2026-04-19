@@ -24,12 +24,17 @@ public class InputHandler : MonoBehaviour
     // Interact
     public static event Action OnInteractPressed;
     public static event Action OnDoubleInteractPressed;
+    public static event Action<float> OnInteractHold;
 
     // Rotate Item
     public static event Action<Vector2> OnItemRotateInput;
     public static event Action OnItemRotateCanceled;
 
     private bool _isHittingCurrentItem = false;
+
+    // Interact Parametrs
+    private float _interactStartTime = 0f;
+    private bool _holdTriggered = false;
 
     private void Awake()
     {
@@ -56,7 +61,9 @@ public class InputHandler : MonoBehaviour
 
         // Interact
         _interact.action.Enable();
-        _interact.action.performed += OnInteractAction;
+        //_interact.action.performed += OnInteractAction;
+        _interact.action.started += OnInteractStart;
+        _interact.action.canceled += OnInteractCanceled;
 
         // Rotate Item
         _rotateItem.action.Enable();
@@ -109,7 +116,19 @@ public class InputHandler : MonoBehaviour
     }
 
     // Interact
-    private void OnInteractAction(InputAction.CallbackContext context)
+    //private void OnInteractAction(InputAction.CallbackContext context)
+    //{
+    //    if (!_playerStates.IsViewItem)
+    //    {
+    //        OnInteractPressed?.Invoke();
+    //    }
+    //    else
+    //    {
+    //        OnDoubleInteractPressed?.Invoke();
+    //    }
+    //}
+
+    private void OnInteractStart(InputAction.CallbackContext context)
     {
         if (!_playerStates.IsViewItem)
         {
@@ -119,10 +138,27 @@ public class InputHandler : MonoBehaviour
         {
             OnDoubleInteractPressed?.Invoke();
         }
+
+        _interactStartTime = Time.time;
+        _holdTriggered = true;
+    }
+
+    private void OnInteractCanceled(InputAction.CallbackContext context)
+    {
+        float holdDuration = Time.time - _interactStartTime;
+        _holdTriggered = false;
+
+        OnInteractHold?.Invoke(-1f);
     }
 
     private void Update()
     {
+        if (_holdTriggered)
+        {
+            float holdDuration = Time.time - _interactStartTime;
+            OnInteractHold?.Invoke(holdDuration);
+        }
+
         if (_playerStates.IsViewItem)
         {
             if (_rotateItem.action.IsPressed())

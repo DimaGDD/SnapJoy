@@ -5,7 +5,7 @@ public enum ItemInteractType
 {
     Pickup,
     Talk,
-    Spin,
+    Hold,
     Holder,
     Open
 }

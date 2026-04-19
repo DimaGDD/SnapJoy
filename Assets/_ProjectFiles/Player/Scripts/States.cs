@@ -4,6 +4,7 @@ public class States : MonoBehaviour
 {
     private bool _isViewItem = false;
     private DefaultPickupItem _currentItem;
+    private DefaultHoldItem _curentHoldItem;
 
     public bool IsViewItem
     {
@@ -15,5 +16,11 @@ public class States : MonoBehaviour
     {
         get { return _currentItem; }
         set { _currentItem = value; }
+    }
+
+    public DefaultHoldItem CurentHoldItem
+    {
+        get { return _curentHoldItem; }
+        set { _curentHoldItem = value; }
     }
 }

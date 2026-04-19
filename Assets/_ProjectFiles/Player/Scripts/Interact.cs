@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class Interact : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Interact : MonoBehaviour
     {
         InputHandler.OnInteractPressed += OnInteractAction;
         InputHandler.OnDoubleInteractPressed += OnDoubleInteractAction;
+        InputHandler.OnInteractHold += OnHoldInteractAction;
     }
 
     private void Awake()
@@ -60,6 +62,41 @@ public class Interact : MonoBehaviour
         {
             PickupItem(hitItem);
             return;
+        }
+    }
+
+    private void OnHoldInteractAction(float time)
+    {
+        if (_playerStates.IsViewItem) return;
+
+        bool shouldCancel = time < 0;
+
+        if (!shouldCancel)
+        {
+            Ray ray = _mainCamera.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f));
+
+            if (Physics.Raycast(ray, out RaycastHit hit, _interactRange, _interactLayerMask))
+            {
+                DefaultHoldItem holdItem = hit.collider.GetComponent<DefaultHoldItem>();
+
+                if (holdItem != null)
+                {
+                    _playerStates.CurentHoldItem = holdItem;
+                    holdItem.HoldItem();
+                    return;
+                }
+            }
+
+            shouldCancel = true;
+        }
+
+        if (shouldCancel && _playerStates.CurentHoldItem != null)
+        {
+            if (_playerStates.CurentHoldItem != null)
+            {
+                _playerStates.CurentHoldItem.CanceledHold();
+                _playerStates.CurentHoldItem = null;
+            }
         }
     }
 
