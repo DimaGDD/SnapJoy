@@ -38,7 +38,7 @@ public class DefaultPickupItem : MonoBehaviour
         get { return _interactTextConfig.GetText(InteractType); }
     }
 
-    public void MoveToTarget(Transform targetPosition, bool isSubActions)
+    public virtual void MoveToTarget(Transform targetPosition, bool isSubActions)
     {
         transform.SetParent(targetPosition);
 
