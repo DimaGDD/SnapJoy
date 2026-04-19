@@ -21,6 +21,7 @@ public class DialogueOption
     public string ResponseText;
     public string NextNodeID;
     public string QuestName;
+    public bool QuestChain;
 }
 
 [CreateAssetMenu(fileName = "New Dialogue", menuName = "Game/Dialogue Graph")]

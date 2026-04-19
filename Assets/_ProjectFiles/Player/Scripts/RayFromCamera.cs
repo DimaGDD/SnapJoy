@@ -20,7 +20,7 @@ public class RayFromCamera : MonoBehaviour
 
     private void Update()
     {
-        if (_playerStates.IsViewItem && _playerStates.IsInDialogue)
+        if (_playerStates.IsViewItem || _playerStates.IsInDialogue)
         {
             UIManager.Instance.HideInteractPanel();
             return;

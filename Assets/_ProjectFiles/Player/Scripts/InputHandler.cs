@@ -124,6 +124,8 @@ public class InputHandler : MonoBehaviour
 
     private void OnInteractStart(InputAction.CallbackContext context)
     {
+        if (_playerStates.IsInDialogue) return;
+
         if (!_playerStates.IsViewItem)
         {
             OnInteractPressed?.Invoke();
@@ -139,6 +141,8 @@ public class InputHandler : MonoBehaviour
 
     private void OnInteractCanceled(InputAction.CallbackContext context)
     {
+        if (_playerStates.IsInDialogue) return;
+
         float holdDuration = Time.time - _interactStartTime;
         _holdTriggered = false;
 
@@ -147,6 +151,9 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
+        if (_playerStates.IsInDialogue)
+            _holdTriggered = false;
+
         if (_holdTriggered)
         {
             float holdDuration = Time.time - _interactStartTime;

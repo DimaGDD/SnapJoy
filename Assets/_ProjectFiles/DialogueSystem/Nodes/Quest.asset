@@ -21,16 +21,16 @@ MonoBehaviour:
     Options:
     - ResponseText: "\u0421\u043B\u0443\u0448\u0430\u044E"
       NextNodeID: 1
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 1
     - ResponseText: "\u0420\u0430\u0441\u0441\u043A\u0430\u0436\u0438 \u043E \u0441\u0435\u0431\u0435"
       NextNodeID: 4
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 0
     - ResponseText: "\u042F \u043F\u043E\u0434\u0443\u043C\u0430\u044E"
       NextNodeID: 3
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 0
   - NodeID: 1
     SpeakerText: "\u041C\u043D\u0435 \u043D\u0443\u0436\u043D\u043E, \u0447\u0442\u043E\u0431\u044B
       \u0442\u044B \u043C\u043D\u0435 \u043F\u0440\u0438\u043D\u0435\u0441 \u043A\u043E\u0435-\u0447\u0442\u043E."
@@ -39,12 +39,12 @@ MonoBehaviour:
     Options:
     - ResponseText: "\u0425\u043E\u0440\u043E\u0448\u043E"
       NextNodeID: 2
-      TriggersQuest: 1
       QuestName: "\u041F\u0440\u0438\u043D\u0435\u0441\u0442\u0438 \u0442\u043E\u043F\u043E\u0440"
+      QuestChain: 1
     - ResponseText: "\u042F \u043F\u043E\u0434\u0443\u043C\u0430\u044E"
       NextNodeID: 3
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 0
   - NodeID: 2
     SpeakerText: "\u0421\u043F\u0430\u0441\u0438\u0431\u043E! \u0411\u0443\u0434\u0443
       \u0436\u0434\u0430\u0442\u044C."
@@ -65,21 +65,21 @@ MonoBehaviour:
     - ResponseText: "\u0421\u043A\u043E\u043B\u044C\u043A\u043E \u0442\u0435\u0431\u0435
         \u043B\u0435\u0442?"
       NextNodeID: 5
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 0
     - ResponseText: "\u0413\u0434\u0435 \u0442\u044B \u0436\u0438\u0432\u0435\u0448\u044C?"
       NextNodeID: 6
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 0
     - ResponseText: "\u0427\u0442\u043E \u0442\u044B \u0441\u043E\u0431\u0438\u0440\u0430\u0435\u0448\u044C\u0441\u044F
         \u0434\u0435\u043B\u0430\u0442\u044C?"
       NextNodeID: 7
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 0
     - ResponseText: "\u041C\u043D\u0435 \u043D\u0435 \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043D\u043E"
       NextNodeID: 0
-      TriggersQuest: 0
       QuestName: 
+      QuestChain: 0
   - NodeID: 5
     SpeakerText: "\u041C\u043D\u0435 20 \u043B\u0435\u0442."
     EndDialogue: 0

@@ -91,6 +91,9 @@ public class DialogueManager : MonoBehaviour
         {
             GameObject btnObj = Instantiate(_optionPrefab, _optionsParent);
 
+            if (option.QuestChain)
+                btnObj.GetComponent<Image>().color = Color.yellow;
+
             var btnText = btnObj.GetComponentInChildren<TextMeshProUGUI>();
             btnText.text = option.ResponseText;
 
