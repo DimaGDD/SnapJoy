@@ -73,6 +73,11 @@ public class DefaultPickupItem : MonoBehaviour
             InputHandler.OnItemRotateInput += HandleRotationInput;
             InputHandler.OnItemRotateCanceled += HandleRotationReset;
         }
+        else
+        {
+            InputHandler.OnItemRotateInput -= HandleRotationInput;
+            InputHandler.OnItemRotateCanceled -= HandleRotationReset;
+        }
     }
 
     private void HandleRotationInput(Vector2 input)
