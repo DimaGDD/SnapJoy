@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: a5c4204b9f913154e99fd44a77a5b749, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 19f0facf28aed8648aa011354208c6ed, type: 2}
+    - target: {fileID: 5866666021909216657, guid: a5c4204b9f913154e99fd44a77a5b749, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
