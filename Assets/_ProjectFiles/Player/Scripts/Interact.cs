@@ -47,6 +47,7 @@ public class Interact : MonoBehaviour
         DefaultHolderItem hitHolder = hit.collider.GetComponent<DefaultHolderItem>();
         DefaultOpenItem hitOpen = hit.collider.GetComponent<DefaultOpenItem>();
         DefaultNPC hitNPC = hit.collider.GetComponent<DefaultNPC>();
+        DefaultPushItem pushItem = hit.collider.GetComponent<DefaultPushItem>();
 
         if (hitHolder != null && !hitHolder.HasItem && _playerStates.CurrentItem != null)
         {
@@ -65,6 +66,11 @@ public class Interact : MonoBehaviour
             InteractWithNPC(hitNPC);
         }
 
+        if (pushItem != null)
+        {
+            PushItem(pushItem);
+        }
+
         if (hitItem != null && _playerStates.CurrentItem == null)
         {
             PickupItem(hitItem);
@@ -75,6 +81,14 @@ public class Interact : MonoBehaviour
     private void InteractWithNPC(DefaultNPC hitNPC)
     {
         hitNPC.InteractWithPlayer(_playerStates, _inputBinds.SkipDialogue, _playerStates.CurrentItem);
+    }
+
+    private void PushItem(DefaultPushItem pushItem)
+    {
+        Vector3 pushDirection = _mainCamera.transform.forward;
+
+        pushItem.PushItem(pushDirection);
+        return;
     }
 
     private void OnHoldInteractAction(float time)

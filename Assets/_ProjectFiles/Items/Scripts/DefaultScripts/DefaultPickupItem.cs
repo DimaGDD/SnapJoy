@@ -7,7 +7,8 @@ public enum ItemInteractType
     Talk,
     Hold,
     Holder,
-    Open
+    Open,
+    Push
 }
 
 public class DefaultPickupItem : MonoBehaviour

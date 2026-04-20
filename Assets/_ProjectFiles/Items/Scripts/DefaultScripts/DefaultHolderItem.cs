@@ -35,4 +35,18 @@ public class DefaultHolderItem : MonoBehaviour
     {
         get { return _interactTextConfig.GetText(ItemInteractType); }
     }
+
+    public void Awake()
+    {
+        DefaultPickupItem pickupItem = GetComponentInChildren<DefaultPickupItem>();
+
+        if (pickupItem != null )
+        {
+            _hasItem = true;
+            _itemInHolder = pickupItem;
+
+            pickupItem.transform.position = _itemPosition.position;
+            pickupItem.transform.rotation = _itemPosition.rotation;
+        }
+    }
 }

@@ -39,6 +39,7 @@ public class RayFromCamera : MonoBehaviour
         DefaultOpenItem defaultOpenItem = hit.collider.GetComponent<DefaultOpenItem>();
         DefaultHoldItem defaultHoldItem = hit.collider.GetComponent<DefaultHoldItem>();
         DefaultNPC defaultNPC = hit.collider.GetComponent<DefaultNPC>();
+        DefaultPushItem defaultPushItem = hit.collider.GetComponent<DefaultPushItem>();
 
         string keyName = _inputBinds.Interact.action.GetBindingDisplayString();
 
@@ -64,6 +65,11 @@ public class RayFromCamera : MonoBehaviour
         {
             shouldShowPanel = true;
             textToShow = defaultNPC.InteractText;
+        }
+        else if (defaultPushItem != null)
+        {
+            shouldShowPanel = true;
+            textToShow = defaultPushItem.InteractText;
         }
         else if (defaultObject != null && defaultObject != _playerStates.CurrentItem)
         {

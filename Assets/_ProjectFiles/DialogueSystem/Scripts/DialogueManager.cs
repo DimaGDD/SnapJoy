@@ -156,7 +156,7 @@ public class DialogueManager : MonoBehaviour
     private void TriggerQuest(string questName)
     {
         _npc.IsQuestTaken = true;
-        UIManager.Instance.ShowQuestPopup(questName, _questItem.name, false);
+        UIManager.Instance.ShowQuestPopup(questName, _questItem.gameObject.name, false);
     }
 
     private void EndDialogue()
