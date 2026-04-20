@@ -37,17 +37,14 @@
 - Отдельный скрипт с состояниями
 - Логика поведения зависит от текущего состояния
 
-### 🔷 Component Pattern (Компонентный подход)
-Каждый тип объекта имеет свой базовый класс:
-- `DefaultPickupItem`
-- `DefaultPushItem`
-- `DefaultHoldItem`
-- `DefaultHolderItem`
-- `DefaultOpenItem`
-- `и тд`
-
 ### 🔷 Наследование и инкапсуляция
 - Все предметы наследуются от базовых классов
+  - `DefaultPickupItem`
+  - `DefaultPushItem`
+  - `DefaultHoldItem`
+  - `DefaultHolderItem`
+  - `DefaultOpenItem`
+  - `и тд`
 - Каждый предмет может расширять свою логику
 - Поля классов защищены от внешних изменений (доступ только через предусмотренные методы и свойства)
 
